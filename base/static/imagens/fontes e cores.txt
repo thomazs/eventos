@@ -1,0 +1,10 @@
+Fontes usadas
+
+Roboto Condensed
+Open Sans
+
+Cores usadas:
+
+Amarelo - #EC971F
+Cinza: #EEEEEE
+Cinza: #DDD

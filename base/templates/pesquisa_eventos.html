@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% block conteudo %}
+<div class="blocos">
+    <h4>Resultados da Busca</h4>
+    <hr>
+    {% if valor_pesquisado %}
+        <p><strong>Termo pesquisado: </strong>{{ valor_pesquisado }}</p>
+        {% if resultados %}
+            {% for evento in resultados %}{% include 'evento.html' %}{% endfor %}
+        {% else %}
+            <div class="alerta">
+                Não foi encontrado nenhum evento com os termos desta busca
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alerta">Não foi passado valor para a busca</div>
+    {% endif %}
+    <hr>
+    <a href="{% url 'index' %}">Voltar</a>
+</div>
+{% endblock conteudo %}

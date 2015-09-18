@@ -1,0 +1,20 @@
+{% extends 'modal.html' %}
+{% block modal_id %}cadastro{% endblock %}
+{% block titulo_modal %}Cadastre seu evento{% endblock %}
+{% block conteudo_modal %}
+	      	<p>Para publicar seu evento é necessário preencher todos os campos abaixo e aguardar a liberação por parte da adminsitração do sistema.</p>
+<!--    <table>
+    {{ form.as_table }}
+    </table> -->
+<form action="{% url 'criaevento' %}" method="POST" id="formEvento">
+    {% csrf_token %}
+    {% for f in form %}
+        {{ f }}
+    {% endfor %}
+</form>
+	        <input type="checkbox">Aceitos os termos para publicação de evento
+{% endblock %}
+{% block opcoes_modal %}
+  <button type="button" class="publique" onclick="document.getElementById('formEvento').submit();">Cadastrar evento</button>
+	        <button type="button" class="publique login" data-dismiss="modal">Cancelar</button>
+{% endblock %}

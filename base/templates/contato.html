@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block conteudo %}
+<div class="blocos">
+	<div class="titulo"><strong>Contato</strong></div>
+    <p>Coloque sue nome aqui</p>
+    <p>Email: <a href="mailto:seu@email.aqui">seu@email.aqui</a></p>
+    <p>Telefone: <a href="tel:6899999999">(68) 9999-9999</a></p>
+    <p>Outras Informações aqui</p>
+    <hr>
+    <a href="{% url 'index' %}">Voltar</a>
+</div>
+{% endblock conteudo %}

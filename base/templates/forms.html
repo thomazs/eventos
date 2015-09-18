@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block conteudo %}
+<div class="blocos">
+	<div class="titulo"><strong>{{ titulo }}</strong></div>
+    <form method="POST" enctype="multipart/form-data">{%  csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="publique">Salvar</button>
+    </form>
+</div>
+{% endblock conteudo %}

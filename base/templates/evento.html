@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<div class="bloco">
+    <div class="detalhe {% if evento.finalizado %}finalizado{% endif %}">
+        <button class="bt_dt {% if evento.finalizado %}bt_finalizado{% endif %} {% if evento.esgotado %}esgotado{% endif %}">
+            {% if evento.finalizado %}Evento finalizado{% else %}
+                {% if evento.esgotado %}Esgotado{% else %}Detalhes{% endif %}
+            {% endif %}
+        </button>
+    </div>
+    <div class="imagem">
+        <img src="{% static "imagens/formatura.jpg" %}">
+    </div>
+    <h2>{{ evento.nome }}</h2>
+    <div class="calendario"></div>
+    <div class="tempo">{{ evento.data }} {{ evento.hora }}</div>
+</div>

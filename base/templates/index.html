@@ -1,0 +1,130 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+		<meta charset="UTF-8">
+		<title>UFAC Eventos</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="{% static "estilos/bootstrap.css" %}">
+
+		<link rel="stylesheet" type="text/css" href="{% static "estilos/principal.css" %}">
+
+		<script>
+		$(document).ready(function(){
+		    $(".menu_m").click(function(){
+		        $(".mn_m").toggle("slow");
+		    });
+            $('.campo').each(function(){
+                if ($(this).data('toggle')=='tooltip')
+                    $(this).tooltip();
+            });
+		});
+		</script>
+
+
+	</head>
+
+	<body>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }} alert alert-error"{% endif %}>
+            {{ message|safe }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+		<!--início do topo mobile-->
+		<div class="topo_m">
+			<input type="text" class="busca_m" placeholder="Buscar evento">
+			<div class="menu_m">
+				<div class="m"></div>
+				<div class="m"></div>
+				<div class="m"></div>
+			</div>
+			<div class="mn_m">
+				<ul>
+					<li>Início</li>
+					<li>Sobre</li>
+					<li>Termos de uso</li>
+					<li>Fale conosco</li>
+				</ul>
+			</div>
+
+		</div>
+		<!--fim do topo mobile-->
+
+		<div class="topo">
+			<div class="logo">
+				<a href="{% url 'index' %}"><img src="{% static "imagens/logo.png" %}"></a>
+			</div>
+			<button class="publique login" data-toggle="modal" data-target="#login">Login {{ user }}</button>
+			<button class="publique" data-toggle="modal" data-target="#cadastro">+ Publique seu e vento</button>
+		</div>
+		<!--fim do topo -->
+
+		<div class="destaque">
+			<h1>Publique e gerencie seu evento!</h1>
+			<h3>A solução completa para o gerenciamento do seu evento</h3>
+			<div class="busca">
+                <form action="{% url 'pesquisa_eventos' %}">
+				    <input type="text" placeholder="Buscar por evento" name="campo_busca"
+                           class="campo_busca" value="{{ valor_pesquisado|default:"" }}">
+                </form>
+			</div>
+		</div>
+		<!--fim do destaque-->
+
+        {% block conteudo %}
+
+		<div class="titulo"><strong>Eventos</strong> do mês</div>
+
+		<!--fim do título eventos do mês-->
+
+		<div class="blocos">
+            {% for evento in eventos_ativos %}
+                {% include 'evento.html' %}
+            {% endfor %}
+		</div>
+
+		<!--fim de eventos do mês-->
+
+		<div class="titulo"><strong>Eventos</strong> Finalizados</div>
+
+		<!--fim do título eventos do mês-->
+
+		<div class="blocos">
+            {% for evento in eventos_inativos %}
+                {% include 'evento.html' %}
+            {% endfor %}
+		</div>
+		
+       {% endblock conteudo %}
+
+
+
+		<div class="rodape">
+			EventosUFAC - Todos os direitos reservados<br>
+			Desenvolvido por: <a href="{% url 'contato' %}">Seu nome</a>
+
+		</div>
+
+	<!-- Modal login-->
+    {% include 'modal_login.html' %}
+	<!-- Modal login-->
+
+	<!-- Modal cadastro-->
+    {% include 'modal_evento.html' %}
+	<!-- Modal login-->
+
+		<script src="{% static "js/bootstrap.min.js" %}"></script>
+
+
+	</body>
+
+
+</html>
