@@ -2,7 +2,8 @@
 from datetime import datetime
 
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render, redirect
+from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from base.views import montaMensagemErro
 from .models import Evento
@@ -65,3 +66,6 @@ def cria_evento(request):
             return render(request, 'forms.html', locals())
     return redirect(reverse_lazy('index'))
 
+def detalhe_evento(request, id):
+    evento = Evento.objects.get(pk=id)
+    return render(request, 'detalheevento.html', locals())

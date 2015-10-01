@@ -27,4 +27,7 @@ urlpatterns = [
         'organizacao.views.pesquisa_eventos',
         name='pesquisa_eventos'),
     url(r'^criaevento/$', 'organizacao.views.cria_evento', name='criaevento'),
+    url(r'^evento/(?P<id>\d+)/$',
+        'organizacao.views.detalhe_evento',
+        name='detalhe_evento'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

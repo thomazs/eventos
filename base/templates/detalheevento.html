@@ -4,7 +4,7 @@
 <div class="blocos">
 	<div class="titulo"><strong>{{ evento.nome }}</strong></div>
     <div class="tempo">De {{ evento.dt_inicio }} a {{ evento.dt_termino }}</div>
-    <div class="detalhe">{{ evento.info }}</div>
+    <div class="detalhes">{{ evento.info }}</div>
     {% if evento.curso_set.all %}
     <hr>
     <div>

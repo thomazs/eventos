@@ -1,7 +1,8 @@
 {% load staticfiles %}
 <div class="bloco">
     <div class="detalhe {% if evento.finalizado %}finalizado{% endif %}">
-        <button class="bt_dt {% if evento.finalizado %}bt_finalizado{% endif %} {% if evento.esgotado %}esgotado{% endif %}">
+        <button class="bt_dt {% if evento.finalizado %}bt_finalizado{% endif %} {% if evento.esgotado %}esgotado{% endif %}"
+                onclick="window.location='{% url 'detalhe_evento' evento.pk %}';">
             {% if evento.finalizado %}Evento finalizado{% else %}
                 {% if evento.esgotado %}Esgotado{% else %}Detalhes{% endif %}
             {% endif %}
