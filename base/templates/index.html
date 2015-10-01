@@ -5,6 +5,10 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 		<meta charset="UTF-8">
 		<title>UFAC Eventos</title>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="{% static "estilos/bootstrap.css" %}">
@@ -19,6 +23,10 @@
             $('.campo').each(function(){
                 if ($(this).data('toggle')=='tooltip')
                     $(this).tooltip();
+            });
+            q=0;
+            $('[data-toggle=tooltip]').each(function(){
+               q++;
             });
 		});
 		</script>

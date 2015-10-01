@@ -49,15 +49,41 @@ class Curso(models.Model):
 
     evento = models.ForeignKey(Evento,related_name='curso_set')
     nome_curso = models.CharField('Nome do Curso', max_length=250)
-    carga_horaria = models.IntegerField('Carga Horária')
+    carga_horaria = models.IntegerField(u'Carga Horária')
     instrutor = models.CharField('Instrutor', max_length=100,
                                  null=True, blank=True)
     data = models.DateField('Data do Curso', null=True, blank=True)
-    qtd_max_vagas = models.IntegerField('Qtd.Máx.Vagas')
+    qtd_max_vagas = models.IntegerField(u'Qtd.Máx.Vagas')
 
     def __unicode__(self):
         return self.nome_curso
 
     def __str__(self):
         return self.nome_curso
+
+
+class Inscricao(models.Model):
+
+    class Meta:
+        db_table = 'inscricao'
+        verbose_name = u'inscrição'
+        verbose_name_plural = u'inscrições'
+
+    evento = models.ForeignKey(Evento,
+                               related_name='inscricao_set')
+    nome = models.CharField('Nome', max_length=100)
+    cpf = models.CharField('CPF', max_length=14, unique=True, null=True, blank=True)
+    rg = models.CharField('RG', max_length=20, null=True, blank=True)
+    pai = models.CharField('Nome do Pai', max_length=100, null=True, blank=True)
+    mae = models.CharField(u'Nome da Mãe', max_length=100, null=True, blank=True)
+    email = models.EmailField('Email', max_length=250)
+    telefone = models.CharField('Telefone', max_length=20)
+
+    def __unicode__(self):
+        return (self.evento.nome)+'-'+self.nome
+
+    def __str__(self):
+        return  self.nome
+
+
 

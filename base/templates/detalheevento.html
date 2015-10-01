@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block conteudo %}
+<div class="blocos">
+	<div class="titulo"><strong>{{ evento.nome }}</strong></div>
+    <div class="tempo">De {{ evento.dt_inicio }} a {{ evento.dt_termino }}</div>
+    <div class="detalhe">{{ evento.info }}</div>
+    {% if evento.curso_set.all %}
+    <hr>
+    <div>
+        <h2>Programação</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Curso</th>
+                    <th>Carga Horária</th>
+                    <th>Instrutor</th>
+                    <th>Qtd.Vagas</th>
+                    <th>Vagas Disponíveis</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for curso in evento.curso_set.all %}
+                <tr>
+                    <td>curso.nome_curso</td>
+                    <td>curso.carga_horaria</td>
+                    <td>curso.instrutor</td>
+                    <td>curso.qtd_max_vagas</td>
+                    <td>????</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% if evento.finalizado %}{% else %}{% if evento.esgotado %}{% else %}
+        <button class="bt_dt">Realizar Inscrição</button>
+    {% endif %}{% endif %}
+</div>
+{% endblock conteudo %}

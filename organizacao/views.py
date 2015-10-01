@@ -1,4 +1,5 @@
 # coding=utf-8
+from datetime import datetime
 
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
@@ -7,7 +8,7 @@ from base.views import montaMensagemErro
 from .models import Evento
 
 
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 class EventoForm(ModelForm):
 
     class Meta:
@@ -20,7 +21,20 @@ class EventoForm(ModelForm):
             self.fields[f].widget.attrs['class'] = 'campo'
             self.fields[f].widget.attrs['placeholder'] = self.fields[f].label
             self.fields[f].widget.attrs['title'] = self.fields[f].label
-            self.fields[f].widget.attrs['data-toggle'] = 'tooltip'
+
+    def clean(self):
+        data = super(EventoForm, self).clean()
+        if data.get('dt_termino',None) and data.get('dt_inicio') and \
+                        data['dt_termino'] < data['dt_inicio']:
+            raise ValidationError('Data de Término deve ser maior ou igual a Data de Início')
+
+        if data.get('dt_inicio') and data['dt_inicio'].date() < datetime.now().date():
+             raise ValidationError('Data de Início deve ser maior ou igual a data atual')
+        # if data.get('dt_inicio') and data['dt_inicio'] < datetime.now():
+        #     raise ValidationError('Data de Início deve ser maior ou igual a data atual')
+
+        return data
+
 
 def index(request):
     form = EventoForm()
