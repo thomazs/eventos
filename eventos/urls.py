@@ -30,4 +30,6 @@ urlpatterns = [
     url(r'^evento/(?P<id>\d+)/$',
         'organizacao.views.detalhe_evento',
         name='detalhe_evento'),
+    url(r'^evento/(?P<id>\d+)/inscricao/$', 'organizacao.views.inscreve_evento',
+        name='inscreve_evento'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

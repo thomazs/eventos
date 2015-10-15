@@ -53,6 +53,7 @@ class Curso(models.Model):
     instrutor = models.CharField('Instrutor', max_length=100,
                                  null=True, blank=True)
     data = models.DateField('Data do Curso', null=True, blank=True)
+    hora = models.TimeField('Hora', null=True, blank=True)
     qtd_max_vagas = models.IntegerField(u'Qtd.Máx.Vagas')
 
     def __unicode__(self):
@@ -78,6 +79,8 @@ class Inscricao(models.Model):
     mae = models.CharField(u'Nome da Mãe', max_length=100, null=True, blank=True)
     email = models.EmailField('Email', max_length=250)
     telefone = models.CharField('Telefone', max_length=20)
+    status = models.BooleanField('Aceita', default=False)
+    cursos = models.ManyToManyField(Curso)
 
     def __unicode__(self):
         return (self.evento.nome)+'-'+self.nome

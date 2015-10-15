@@ -5,23 +5,27 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.views.generic import CreateView
 from base.views import montaMensagemErro
-from .models import Evento
-
+from .models import Evento, Inscricao
 
 from django.forms import ModelForm, ValidationError
-class EventoForm(ModelForm):
 
-    class Meta:
-        model = Evento
-        exclude = ('situacao',)
 
+class ModelFormBase(ModelForm):
     def __init__(self, *args, **kwargs):
-        super(EventoForm, self).__init__(*args, **kwargs)
+        super(ModelFormBase, self).__init__(*args, **kwargs)
         for f in self.fields:
             self.fields[f].widget.attrs['class'] = 'campo'
             self.fields[f].widget.attrs['placeholder'] = self.fields[f].label
             self.fields[f].widget.attrs['title'] = self.fields[f].label
+
+
+class EventoForm(ModelFormBase):
+
+    class Meta:
+        model = Evento
+        exclude = ('situacao',)
 
     def clean(self):
         data = super(EventoForm, self).clean()
@@ -35,6 +39,17 @@ class EventoForm(ModelForm):
         #     raise ValidationError('Data de Início deve ser maior ou igual a data atual')
 
         return data
+
+from django.forms import HiddenInput
+class InscricaoForm(ModelFormBase):
+    class Meta:
+        model = Inscricao
+        exclude = ('status',)
+    def __init__(self, *args, **kwargs):
+        super(InscricaoForm, self).__init__(*args, **kwargs)
+        self.fields['evento'].widget = HiddenInput()
+        ev = self.initial['evento'];
+        self.fields['cursos'].queryset = self.fields['cursos'].queryset.filter(evento_id=ev.id)
 
 
 def index(request):
@@ -66,6 +81,26 @@ def cria_evento(request):
             return render(request, 'forms.html', locals())
     return redirect(reverse_lazy('index'))
 
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+
 def detalhe_evento(request, id):
-    evento = Evento.objects.get(pk=id)
+    evento = get_object_or_404(Evento, pk=id)
     return render(request, 'detalheevento.html', locals())
+
+
+def inscreve_evento(request, id):
+    voltar = reverse_lazy('detalhe_evento', args=[id])
+    evento = get_object_or_404(Evento, pk=id)
+    titulo = u'Inscrições - %s' % evento
+    form = InscricaoForm(initial={'evento':evento})
+    if request.method == 'POST':
+        form = InscricaoForm(request.POST);
+        if form.is_valid():
+            s = form.save()
+            s.evento = evento
+            s.save()
+            messages.success(request,
+                u'Inscrição realizada com sucesso!')
+            return redirect(reverse_lazy('index'))
+    return render(request, 'forms.html', locals())

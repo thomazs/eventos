@@ -17,6 +17,7 @@
 
 		<script>
 		$(document).ready(function(){
+            {% block js_ready %}{% endblock js_ready %}
 		    $(".menu_m").click(function(){
 		        $(".mn_m").toggle("slow");
 		    });
@@ -28,6 +29,7 @@
             $('[data-toggle=tooltip]').each(function(){
                q++;
             });
+
 		});
 		</script>
 
@@ -39,7 +41,8 @@
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }} alert alert-error"{% endif %}>
+        <li{% if message.tags %}
+            class="{{ message.tags }} alert alert-error"{% endif %}>
             {{ message|safe }}
         </li>
         {% endfor %}
