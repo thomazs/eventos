@@ -48,8 +48,9 @@ class InscricaoForm(ModelFormBase):
     def __init__(self, *args, **kwargs):
         super(InscricaoForm, self).__init__(*args, **kwargs)
         self.fields['evento'].widget = HiddenInput()
-        ev = self.initial['evento'];
-        self.fields['cursos'].queryset = self.fields['cursos'].queryset.filter(evento_id=ev.id)
+        ev = self.initial['evento']
+        self.fields['cursos'].queryset = \
+        self.fields['cursos'].queryset.filter(evento_id=ev.id)
 
 
 def index(request):
@@ -95,9 +96,11 @@ def inscreve_evento(request, id):
     titulo = u'Inscrições - %s' % evento
     form = InscricaoForm(initial={'evento':evento})
     if request.method == 'POST':
-        form = InscricaoForm(request.POST);
+        form = InscricaoForm(request.POST, initial={'evento':evento})
         if form.is_valid():
             s = form.save()
+            s.ip = request.META['REMOTE_ADDR']
+            s.usuario = request.user if request.user.is_authenticated() else None
             s.evento = evento
             s.save()
             messages.success(request,

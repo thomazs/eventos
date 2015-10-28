@@ -5,10 +5,7 @@
 	<div class="titulo"><strong>{{ titulo }}</strong></div>
     <form method="POST" enctype="multipart/form-data">{%  csrf_token %}
         {{ form.as_p }}
-        <button type="button" class="publique"
-                onclick="history.go(-1);">Voltar</button>
         <a href="..">Voltar</a>
-        {% if voltar %}<a href="{{ voltar }}">Voltar2</a>{% endif %}
         <button type="submit" class="publique">Salvar</button>
     </form>
 </div>

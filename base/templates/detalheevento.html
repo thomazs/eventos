@@ -27,7 +27,7 @@
                     <td>{{ curso.carga_horaria }}</td>
                     <td>{{ curso.instrutor }}</td>
                     <td>{{ curso.qtd_max_vagas }}</td>
-                    <td>????{# todo Adicionar o cálculo das vagas disponíveis #}</td>
+                    <td>{{ curso.vagas_disponiveis }}{# todo Adicionar o cálculo das vagas disponíveis #}</td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -48,6 +48,7 @@
       <exported-key name="#FAKE_auth_user_groups_2" table="auth_user_groups" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_auth_user_user_permissions_2" table="auth_user_user_permissions" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_django_admin_log_1" table="django_admin_log" schema="" catalog="" columns="user_id"/>
+      <exported-key name="#FAKE_inscricao_1" table="inscricao" schema="" catalog="" columns="usuario_id"/>
     </table>
     <table name="auth_user_groups" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
@@ -68,6 +69,20 @@
       <foreign-key name="#FAKE_auth_user_user_permissions_2" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <index name="auth_user_user_permissions_8373b171" unique="true" columns="permission_id"/>
       <index name="auth_user_user_permissions_e8701ad4" unique="true" columns="user_id"/>
+    </table>
+    <table name="curso" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="nome_curso" sqlType="VARCHAR(250)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="carga_horaria" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="instrutor" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="data" sqlType="DATE" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="qtd_max_vagas" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="evento_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="hora" sqlType="TIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_curso_1" columns="evento_id" ref-table="evento" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <exported-key name="#FAKE_inscricao_cursos_1" table="inscricao_cursos" schema="" catalog="" columns="curso_id"/>
+      <index name="curso_afb29da0" unique="true" columns="evento_id"/>
     </table>
     <table name="django_admin_log" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
@@ -112,8 +127,46 @@
       <column name="dt_inicio" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="dt_termino" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="informacoes" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR(250)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="nome_contato" sqlType="VARCHAR(80)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="qtd_participantes" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="telefone" sqlType="VARCHAR(20)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="situacao" sqlType="VARCHAR(1)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <primary-key columns="id"/>
+      <exported-key name="#FAKE_curso_1" table="curso" schema="" catalog="" columns="evento_id"/>
+      <exported-key name="#FAKE_inscricao_2" table="inscricao" schema="" catalog="" columns="evento_id"/>
+    </table>
+    <table name="inscricao" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="nome" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="cpf" sqlType="VARCHAR(14)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="rg" sqlType="VARCHAR(20)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="pai" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="mae" sqlType="VARCHAR(100)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR(250)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="telefone" sqlType="VARCHAR(20)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="evento_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="BOOL" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="data_cadastro" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="data_modificacao" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="ip" sqlType="CHAR(15)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="usuario_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_inscricao_1" columns="usuario_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_inscricao_2" columns="evento_id" ref-table="evento" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <exported-key name="#FAKE_inscricao_cursos_2" table="inscricao_cursos" schema="" catalog="" columns="inscricao_id"/>
+      <index name="inscricao_abfe0f96" unique="true" columns="usuario_id"/>
+      <index name="inscricao_afb29da0" unique="true" columns="evento_id"/>
+    </table>
+    <table name="inscricao_cursos" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="inscricao_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="curso_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_inscricao_cursos_1" columns="curso_id" ref-table="curso" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_inscricao_cursos_2" columns="inscricao_id" ref-table="inscricao" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <index name="inscricao_cursos_6f899f0d" unique="true" columns="curso_id"/>
+      <index name="inscricao_cursos_79a793e4" unique="true" columns="inscricao_id"/>
     </table>
     <table name="sqlite_sequence" schema="" catalog="" type="TABLE">
       <column name="name" sqlType="" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
